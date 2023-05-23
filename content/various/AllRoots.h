@@ -6,7 +6,7 @@
  * Modify the merge function to combine children into a single representation.
  * Modify the promote function to combine a child representation with its parent.
  * Time: O(N) Assuming merge/promote are O(1).
- * Status: TODO, hardly tested
+ * Status: Tested on kattis:joiningnetwork and cses:1133
  */
 #pragma once
 
@@ -24,28 +24,23 @@ struct AllRoots {
 	T promote(const T& v1) {
 		return {v1.F + v1.S, v1.S + 1};
 	}
+	T get(int x, int i = 0){
+		return promote(merge(pre[x][i], suf[x][i+1]));
+	};
 	void addEdge(int u, int v){
 		adj[u].pb(v);
 		adj[v].pb(u);
 	}
 	T down(int x, int p = -1) {
-		int pi = -1;
-		if(p != -1){
-			pi = 0;
-			while(adj[x][pi] != p) ++pi;
-			swap(adj[x][0], adj[x][pi]);
-			pi = 0;
-		}
-		for(int i = adj[x].size()-1; i > pi; --i)
+		for(auto& c : adj[x]) if(c == p) swap(c, adj[x][0]);
+		for(int i = adj[x].size()-1; i > -(p<0); --i)
 			suf[x][i] = merge(down(adj[x][i], x), suf[x][i+1]);
-		return promote(suf[x][1]);
+		return get(x);
 	}
 	void up(int x, int p = -1) {
 		rep(i, p != -1, adj[x].size()) {
-			pre[x][i+1] = merge(pre[x][i],
-													promote(suf[adj[x][i]][1]));
-			pre[adj[x][i]][1] = promote(merge(pre[x][i],
-																				suf[x][i+1]));
+			pre[x][i+1] = merge(pre[x][i], get(adj[x][i]));
+			pre[adj[x][i]][1] = get(x, i);
 			up(adj[x][i], x);
 		}
 	}
@@ -56,7 +51,7 @@ struct AllRoots {
 		}
 		down(root);
 		if(sz(adj[root]))
-			pre[root][1] = promote(suf[adj[root][0]][1]);
+			pre[root][1] = get(adj[root][0]);
 		up(root);
 		vector<T> res(n);
 		rep(i,0,n) res[i] = promote(pre[i].back());
