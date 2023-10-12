@@ -21,11 +21,11 @@ struct AllRoots {
 	T merge(const T& v1, const T& v2) {
 		return {v1.F + v2.F, v1.S + v2.S};
 	}
-	T promote(const T& v1) {
+	T promote(const T& v1, int x) {
 		return {v1.F + v1.S, v1.S + 1};
 	}
 	T get(int x, int i = 0){
-		return promote(merge(pre[x][i], suf[x][i+1]));
+		return promote(merge(pre[x][i], suf[x][i+1]), x);
 	};
 	void addEdge(int u, int v){
 		adj[u].pb(v);
@@ -54,7 +54,7 @@ struct AllRoots {
 			pre[root][1] = get(adj[root][0]);
 		up(root);
 		vector<T> res(n);
-		rep(i,0,n) res[i] = promote(pre[i].back());
+		rep(i,0,n) res[i] = promote(pre[i].back(), i);
 		return res;
 	}
 };
