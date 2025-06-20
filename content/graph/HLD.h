@@ -21,10 +21,13 @@ template <bool VALS_EDGES> struct HLD {
 	int N, tim = 0;
 	vector<vi> adj;
 	vi par, siz, depth, rt, pos;
-	Node *tree;
+	lztree lt;
 	HLD(vector<vi> adj_)
 		: N(sz(adj_)), adj(adj_), par(N, -1), siz(N, 1), depth(N),
-		  rt(N),pos(N),tree(new Node(0, N)){ dfsSz(0); dfsHld(0); }
+		  rt(N),pos(N), lt(N) {
+		dfsSz(0); dfsHld(0);
+		// possible further lztree initialization
+	}
 	void dfsSz(int v) {
 		if (par[v] != -1) adj[v].erase(find(all(adj[v]), par[v]));
 		for (int& u : adj[v]) {
@@ -49,17 +52,17 @@ template <bool VALS_EDGES> struct HLD {
 		if (depth[u] > depth[v]) swap(u, v);
 		op(pos[u] + VALS_EDGES, pos[v] + 1);
 	}
-	void modifyPath(int u, int v, int val) {
-		process(u, v, [&](int l, int r) { tree->add(l, r, val); });
+	void modifyPath(int u, int v, lztree::U val) {
+		process(u, v, [&](int l, int r) { lt.modify(l, r, val); });
 	}
-	int queryPath(int u, int v) { // Modify depending on problem
-		int res = -1e9;
+	lztree::T queryPath(int u, int v) {
+		lztree::T res = lt.idT;
 		process(u, v, [&](int l, int r) {
-				res = max(res, tree->query(l, r));
+			res = lt.f(res, lt.query(l, r));
 		});
 		return res;
 	}
-	int querySubtree(int v) { // modifySubtree is similar
-		return tree->query(pos[v] + VALS_EDGES, pos[v] + siz[v]);
+	lztree::T querySubtree(int v) { // modifySubtree is similar
+		return lt.query(pos[v] + VALS_EDGES, pos[v] + siz[v]);
 	}
 };
