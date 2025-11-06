@@ -19,15 +19,15 @@ struct RollbackUF {
 	int time() { return sz(st); }
 	void rollback(int t) {
 		for (int i = time(); i --> t;)
-			e[st[i].first] = st[i].second;
+			e[st[i].F] = st[i].S;
 		st.resize(t);
 	}
 	bool join(int a, int b) {
 		a = find(a), b = find(b);
 		if (a == b) return false;
 		if (e[a] > e[b]) swap(a, b);
-		st.push_back({a, e[a]});
-		st.push_back({b, e[b]});
+		st.pb({a, e[a]});
+		st.pb({b, e[b]});
 		e[a] += e[b]; e[b] = a;
 		return true;
 	}

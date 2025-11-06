@@ -69,7 +69,7 @@
 
 % Include a list of source files at the top of every page. For the purpose
 % of recording those, we use eTeX marks. (We can't just append data directly to
-% the header, because TeX outputs pages asynchronously, noticably so when
+% the header, because TeX outputs pages asynchronously, noticeably so when
 % multicol is in use.) There is no command for getting all marks set on a page,
 % so we take only the last one and include all non-included files up until that
 % one. Most of the time \splitbotmark will give us the right mark, but in rare
@@ -221,8 +221,8 @@
 	\begin{center}
 		\strut % Magic
 		\vspace{3cm}\\
-		\includegraphics[width=3cm]{\@unilogo}\\
-		{\fontsize{25}{30}\selectfont \@unilong\\}
+		\includegraphics[width=8cm]{\@unilogo}\\
+		% {\fontsize{25}{30}\selectfont \@unilong\\}
 		{\fontsize{60}{60}\selectfont \@teamname\\}
 		\vspace{0.5cm}
 		{\huge \@teammembers\\}

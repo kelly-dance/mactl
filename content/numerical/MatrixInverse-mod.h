@@ -46,6 +46,6 @@ found:
 	}
 
 	rep(i,0,n) rep(j,0,n)
-		A[col[i]][col[j]] = tmp[i][j] % mod + (tmp[i][j] < 0 ? mod : 0);
+		A[col[i]][col[j]] = tmp[i][j] % mod + (tmp[i][j] < 0)*mod;
 	return n;
 }

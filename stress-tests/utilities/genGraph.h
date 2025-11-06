@@ -8,7 +8,7 @@ vector<pii> randomSimpleGraphAsEdgeList(int n, int m) {
 		rep(i,0,n) rep(j,0,i) {
 			int a = i, b = j;
 			if (randBool()) swap(a, b);
-			ed.push_back({a,b});
+			ed.pb({a,b});
 		}
 		shuffle_vec(ed);
 		ed.erase(ed.begin() + m, ed.end());
@@ -18,8 +18,8 @@ vector<pii> randomSimpleGraphAsEdgeList(int n, int m) {
 			int a = randRange(n);
 			int b = randRange(n);
 			if (a == b) continue;
-			if (!seen.insert(minmax(a, b)).second) continue;
-			ed.push_back({a,b});
+			if (!seen.insert(minmax(a, b)).S) continue;
+			ed.pb({a,b});
 		}
 	}
 	return ed;
@@ -28,8 +28,8 @@ vector<pii> randomSimpleGraphAsEdgeList(int n, int m) {
 vector<vi> randomSimpleGraph(int n, int m) {
 	vector<vi> ed(n);
 	for (auto pa : randomSimpleGraphAsEdgeList(n, m)) {
-		ed[pa.first].push_back(pa.second);
-		ed[pa.second].push_back(pa.first);
+		ed[pa.F].pb(pa.S);
+		ed[pa.S].pb(pa.F);
 	}
 	for (auto& v : ed) shuffle_vec(v);
 	return ed;
@@ -50,12 +50,12 @@ vector<pii> randomRegularGraphAsEdgeList(int n, int k) {
 		int bi = randRange(sz(cands));
 		int a = cands[ai], b = cands[bi];
 		if (a == b) continue;
-		if (!seen.insert(minmax(a, b)).second) {
+		if (!seen.insert(minmax(a, b)).S) {
 			if (failures++ > 100) goto fail;
 			continue;
 		}
 		failures = 0;
-		ed.push_back({a, b});
+		ed.pb({a, b});
 		--rem[a], --rem[b];
 		if (ai < bi) swap(ai, bi), swap(a, b);
 		if (rem[a] == 0) {

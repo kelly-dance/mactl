@@ -69,7 +69,7 @@ struct HLD {
 	// query all *nodes* between n1, n2
 	pair<T, int> query2(int i1, int i2) {
 		pair<T, int> ans = query(i1, i2);
-		f(ans.first, V[ans.second].val);
+		f(ans.F, V[ans.S].val);
 		return ans;
 	}
 
@@ -78,11 +78,11 @@ struct HLD {
 		int sum = 1, ch, nod, sz;
 		tuple<int,int,int> mx(-1,-1,-1);
 		for(auto &e: g[at]){
-			if (e.first == par) continue;
-			tie(sz, ch) = dfs(e.first, at, g, d+1);
-			V[e.first].val = e.second;
+			if (e.F == par) continue;
+			tie(sz, ch) = dfs(e.F, at, g, d+1);
+			V[e.F].val = e.S;
 			sum += sz;
-			mx = max(mx, make_tuple(sz, e.first, ch));
+			mx = max(mx, make_tuple(sz, e.F, ch));
 		}
 		tie(sz, nod, ch) = mx;
 		if (2*sz < sum) return pii(sum, -1);
@@ -90,7 +90,7 @@ struct HLD {
 		V[nod].pos = sz(C[ch].nodes);
 		V[nod].chain = ch;
 		C[ch].par = at;
-		C[ch].nodes.push_back(nod);
+		C[ch].nodes.pb(nod);
 		return pii(sum, ch);
 	}
 };

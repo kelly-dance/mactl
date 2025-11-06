@@ -14,17 +14,17 @@ vi cover(pair<T, T> G, vector<pair<T, T>> I) {
 	vi S(sz(I)), R;
 	iota(all(S), 0);
 	sort(all(S), [&](int a, int b) { return I[a] < I[b]; });
-	T cur = G.first;
+	T cur = G.F;
 	int at = 0;
-	while (cur < G.second) { // (A)
+	while (cur < G.S) { // (A)
 		pair<T, int> mx = make_pair(cur, -1);
-		while (at < sz(I) && I[S[at]].first <= cur) {
-			mx = max(mx, make_pair(I[S[at]].second, S[at]));
+		while (at < sz(I) && I[S[at]].F <= cur) {
+			mx = max(mx, make_pair(I[S[at]].S, S[at]));
 			at++;
 		}
-		if (mx.second == -1) return {};
-		cur = mx.first;
-		R.push_back(mx.second);
+		if (mx.S == -1) return {};
+		cur = mx.F;
+		R.pb(mx.S);
 	}
 	return R;
 }

@@ -23,10 +23,10 @@ template<class T> T edmondsKarp(vector<unordered_map<int, T>>& graph, int source
 		rep(i,0,ptr) {
 			int x = q[i];
 			for (auto e : graph[x]) {
-				if (par[e.first] == -1 && e.second > 0) {
-					par[e.first] = x;
-					q[ptr++] = e.first;
-					if (e.first == sink) goto out;
+				if (par[e.F] == -1 && e.S > 0) {
+					par[e.F] = x;
+					q[ptr++] = e.F;
+					if (e.F == sink) goto out;
 				}
 			}
 		}

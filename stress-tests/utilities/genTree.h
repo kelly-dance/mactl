@@ -34,7 +34,7 @@ vector<pair<int,int>> pruferCodeToTree(vector<int> &pruferCode) {
         //Find the smallest number which is not present in prufer code now
         int b = *leaves.begin(); // the leaf
 
-        edges.push_back({a,b}); // Edge of the tree
+        edges.pb({a,b}); // Edge of the tree
 
         leaves.erase ( b ); // Remove from absent list
         nodeCount[a]--; // Remove from prufer code
@@ -42,17 +42,17 @@ vector<pair<int,int>> pruferCodeToTree(vector<int> &pruferCode) {
     }
 
     // The final edge
-    edges.push_back({*leaves.begin(), *leaves.rbegin()});
+    edges.pb({*leaves.begin(), *leaves.rbegin()});
     return edges;
 }
 
 vector<pair<int, int>> genRandomTree(int n) {
     vector<int> pruferCode;
     for (int i=0; i<n-2; i++) {
-        pruferCode.push_back(rand()%(n-1) + 1);
+        pruferCode.pb(rand()%(n-1) + 1);
     }
     auto edges = pruferCodeToTree(pruferCode);
     for (auto &p: edges)
-        p.first--, p.second--;
+        p.F--, p.S--;
     return edges;
 }

@@ -25,22 +25,22 @@ int Time;
 template<class F>
 int dfs(int at, int par, F& f) {
 	int me = num[at] = ++Time, e, y, top = me;
-	for (auto pa : ed[at]) if (pa.second != par) {
+	for (auto pa : ed[at]) if (pa.S != par) {
 		tie(y, e) = pa;
 		if (num[y]) {
 			top = min(top, num[y]);
 			if (num[y] < me)
-				st.push_back(e);
+				st.pb(e);
 		} else {
 			int si = sz(st);
 			int up = dfs(y, e, f);
 			top = min(top, up);
 			if (up == me) {
-				st.push_back(e);
+				st.pb(e);
 				f(vi(st.begin() + si, st.end()));
 				st.resize(si);
 			}
-			else if (up < me) st.push_back(e);
+			else if (up < me) st.pb(e);
 			else { /* e is a bridge */ }
 		}
 	}

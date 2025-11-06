@@ -20,9 +20,9 @@ struct DP { // Modify at will:
 		pair<ll, int> best(LLONG_MAX, LO);
 		rep(k, max(LO,lo(mid)), min(HI,hi(mid)))
 			best = min(best, make_pair(f(mid, k), k));
-		store(mid, best.second, best.first);
-		rec(L, mid, LO, best.second+1);
-		rec(mid+1, R, best.second, HI);
+		store(mid, best.S, best.F);
+		rec(L, mid, LO, best.S+1);
+		rec(mid+1, R, best.S, HI);
 	}
 	void solve(int L, int R) { rec(L, R, INT_MIN, INT_MAX); }
 };
