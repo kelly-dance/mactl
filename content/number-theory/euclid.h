@@ -13,3 +13,8 @@ ll euclid(ll a, ll b, ll &x, ll &y) {
 	ll d = euclid(b, a % b, y, x);
 	return y -= a/b * x, d;
 }
+
+ll inv(ll x){
+	ll a,b;euclid(x,mod,a,b);
+	return (a+mod)%mod;
+}
