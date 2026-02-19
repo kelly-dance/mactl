@@ -9,7 +9,7 @@ static const vi smol = []{
 	const int LIM = 1e7+10;
 	vi smol(LIM); iota(all(smol), 0);
 	for(int i = 2; i < LIM; i++) {
-		if(smol[i] == i) for(int j = 2*i; j < LIM; j += i) {
+		if(smol[i] == i) for(ll j = (ll)i*i; j < LIM; j += i) {
 			smol[j] = min(smol[j], i);
 		}
 	}
