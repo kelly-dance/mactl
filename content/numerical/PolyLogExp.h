@@ -12,9 +12,9 @@
 vl polylog(const vl& a){
 	assert(a[0]==1);
 	if(sz(a)==1) return {0};
-	vi ap(sz(a)-1);
+	vl ap(sz(a)-1);
 	rep(i,0,sz(a)-1) ap[i]=(a[i+1]*(i+1))%mod;
-	vi r = conv(ap, polyinv(a));
+	vl r = conv(ap, polyinv(a));
 	r.resize(sz(a)-1);
 	r.insert(r.begin(), 0);
 	rep(i,1,sz(a)) r[i]=(r[i]*inv(i))%mod;
